@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <title>Slow Rotating Loader</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background :#240f52;
+            overflow: hidden;
+        }
+        .heading{
+            color: black;
+        }
+        
+
+        .loader-container {
+            position: relative;
+            width: 100px;
+            height: 100px;
+        }
+
+        .loader {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 6px solid transparent;
+            border-top: 6px solid rgba(128, 0, 128, 0.781); /* Shiny color 1 */
+            border-right: 6px solid #e74c3c; /* Shiny color 2 */
+            animation: spin 4s linear infinite; /* Slower rotation (4 seconds) */
+        }
+
+        .percentage {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 24px;
+            color: #f39c12; /* Shiny color 1 */
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <h1 class="heading">Rotating loader with HTML & CSS </h1>
+    <div class="loader-container">
+        <div class="loader" id="loader"></div>
+        <div class="percentage" id="percentage">0%</div>
+    </div>
+
+    <script>
+        let percentage = 0;
+        const loader = document.getElementById("loader");
+        const percentageElement = document.getElementById("percentage");
+
+        function updateLoader() {
+            if (percentage <= 100) {
+                loader.style.transform = `rotate(${(percentage / 100) * 360}deg)`;
+                percentageElement.innerText = `${percentage}%`;
+                percentage += 1; // Increment by 1 to slow down the percentage update.
+                if (percentage <= 100) {
+                    setTimeout(updateLoader, 80); // Adjust this value for a slower percentage update.
+                }
+            }
+        }
+
+        setTimeout(updateLoader, 80); // Initial call to start the update.
+    </script>
+</body>
+</html>
